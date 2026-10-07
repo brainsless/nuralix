@@ -26,7 +26,7 @@ export default {
 
   intro: {
     title: 'Brand guidelines',
-    body: 'Everything needed to show Nuralix correctly: the logo files, the six colours, the typefaces, the footage and how we write.',
+    body: 'Everything needed to show Nuralix correctly: the logo files, the colours, the typefaces, the footage and how we write.',
   },
 
   logo: {
@@ -69,6 +69,7 @@ export default {
       { name: 'Slate', hex: '#5A6B6F', use: 'Secondary text. 5.17:1 on Paper', dark: true },
       { name: 'Reagent', hex: '#0E6F6A', use: 'Links and labels. 5.57:1 on Paper', dark: true },
       { name: 'Ink', hex: '#0C1B1E', use: 'Text and buttons. 16.36:1 on Paper', dark: true },
+      { name: 'Alert', hex: '#A4341F', use: 'Form errors only', dark: true },
     ],
   },
 

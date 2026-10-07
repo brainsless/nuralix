@@ -1,17 +1,26 @@
-const SITE = 'https://nuralix.ai';
 const APP = 'https://app.nuralix.ai';
 
-// Sign-up accepts the page to open once the account exists, as the live site's own buttons do.
-const signUpThen = (destination) => `${SITE}/sign-up?returnTo=${encodeURIComponent(destination)}`;
+// Sign-up accepts the page to open once the account exists.
+const signUpThen = (destination) => `/sign-up?returnTo=${encodeURIComponent(destination)}`;
 
 export const LINKS = {
-  signIn: `${SITE}/sign-in`,
+  signIn: '/sign-in',
+  signUp: '/sign-up',
   orderKit: signUpThen(`${APP}/health`),
   activateKit: `${APP}/health/activate-kit`,
   geneticAnalysis: signUpThen(`${APP}/genetics?startCheckout=1`),
-  contact: `${SITE}/contact`,
-  privacy: `${SITE}/privacy`,
-  terms: `${SITE}/terms`,
+  familyHub: `/sign-in?returnTo=${encodeURIComponent('https://hospital.nuralix.ai/family')}`,
+  familySignUp: signUpThen('https://hospital.nuralix.ai/family'),
+  providerPortal: 'https://hospital.nuralix.ai/login',
+  founder: '/founder',
+  family: '/family-care',
+  genetics: '/genetics',
+  investors: '/investors',
+  contact: '/contact',
+  privacy: '/privacy',
+  terms: '/terms',
+  email: 'mailto:nour@nuralix.ai',
+  linkedIn: 'https://www.linkedin.com/in/noursaif/',
 };
 
 export const SOURCES = {

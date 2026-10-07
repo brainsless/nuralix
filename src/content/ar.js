@@ -184,9 +184,9 @@ export default {
       {
         title: 'المنتج',
         links: [
-          { href: '/ar#reports', label: 'ما تحصل عليه' },
+          { href: LINKS.genetics, label: 'الجينات' },
+          { href: LINKS.family, label: 'العائلة' },
           { href: '/ar#tracking', label: 'الذكاء الاصطناعي' },
-          { href: '/ar#compare', label: 'المقارنة' },
           { href: '/ar#price', label: 'السعر' },
         ],
       },
@@ -201,6 +201,8 @@ export default {
       {
         title: 'الشركة',
         links: [
+          { href: LINKS.founder, label: 'المؤسِّسة' },
+          { href: LINKS.investors, label: 'المستثمرون' },
           { href: '/branding', label: 'دليل الهوية' },
           { href: LINKS.contact, label: 'تواصل معنا' },
           { href: LINKS.privacy, label: 'سياسة الخصوصية' },

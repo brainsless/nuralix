@@ -187,9 +187,9 @@ export default {
       {
         title: 'Product',
         links: [
-          { href: '/#reports', label: 'What you get' },
+          { href: LINKS.genetics, label: 'Genetics' },
+          { href: LINKS.family, label: 'Family' },
           { href: '/#tracking', label: 'The AI' },
-          { href: '/#compare', label: 'Compare' },
           { href: '/#price', label: 'Price' },
         ],
       },
@@ -204,6 +204,8 @@ export default {
       {
         title: 'Company',
         links: [
+          { href: LINKS.founder, label: 'Founder' },
+          { href: LINKS.investors, label: 'Investors' },
           { href: '/branding', label: 'Brand guidelines' },
           { href: LINKS.contact, label: 'Contact' },
           { href: LINKS.privacy, label: 'Privacy' },

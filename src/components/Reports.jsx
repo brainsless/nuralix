@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { usePlayInView } from '../hooks/usePlayInView.js';
+import Counts from './Counts.jsx';
 import Rich from './Rich.jsx';
 
 const WIDE = '(min-width: 821px)';
@@ -107,14 +108,7 @@ export default function Reports({ label, reports, counts, fine }) {
         </div>
       </div>
 
-      <dl className="counts">
-        {counts.map((count) => (
-          <div key={count.label}>
-            <dt>{count.value}</dt>
-            <dd>{count.label}</dd>
-          </div>
-        ))}
-      </dl>
+      <Counts counts={counts} />
       <p className="fine">{fine}</p>
     </section>
   );
