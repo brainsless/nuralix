@@ -16,7 +16,7 @@ import VerifyEmail from './pages/auth/VerifyEmail.jsx';
 import en from './content/en.js';
 import ar from './content/ar.js';
 import brand from './content/brand.js';
-import { auth, contact, family, founder, genetics, investors, legal } from './content/pages.js';
+import { pagesFor } from './content/pages.js';
 import './styles/base.css';
 import './styles/nav.css';
 import './styles/hero.css';
@@ -27,24 +27,45 @@ import './styles/auth.css';
 import './styles/arabic.css';
 import './styles/branding.css';
 
+const SWITCH = {
+  en: { label: 'العربية', lang: 'ar' },
+  ar: { label: 'English', lang: 'en' },
+};
+
+// The pages that exist in every language, by path, with the content each one renders.
+function pageRoutes(locale, base, otherBase) {
+  const pages = pagesFor(locale);
+  const table = {
+    '/founder': [Founder, pages.founder],
+    '/contact': [Contact, pages.contact],
+    '/investors': [Investors, pages.investors],
+    '/family-care': [Family, pages.family],
+    '/genetics': [Genetics, pages.genetics],
+    '/privacy': [Legal, pages.privacy],
+    '/terms': [Legal, pages.terms],
+    '/sign-in': [SignIn, pages.auth, pages.auth.meta.signIn],
+    '/sign-up': [SignUp, pages.auth, pages.auth.meta.signUp],
+    '/forgot-password': [ForgotPassword, pages.auth, pages.auth.meta.forgot],
+    '/reset-password': [ResetPassword, pages.auth, pages.auth.meta.reset],
+    '/verify-email': [VerifyEmail, pages.auth, pages.auth.meta.verify],
+  };
+
+  return Object.fromEntries(Object.entries(table).map(([path, [Page, content, meta = content.meta]]) => {
+    // Each page links to itself in the other language, keeping any ?returnTo it was opened with.
+    const toOther = { ...SWITCH[locale], href: `${otherBase}${path}${location.search}` };
+    const localized = content.nav ? { ...content, nav: { ...content.nav, switch: toOther } } : { ...content, switch: toOther };
+    return [`${base}${path}`, { meta, page: <Page content={localized} /> }];
+  }));
+}
+
 // Only the two landing pages open on the video card that the header rides in. Everywhere else the
 // header starts in its settled state.
 const routes = {
   '/': { meta: en.meta, page: <Landing content={en} />, opensOnVideo: true },
   '/ar': { meta: ar.meta, page: <Landing content={ar} />, opensOnVideo: true },
   '/branding': { meta: brand.meta, page: <Branding content={brand} /> },
-  '/founder': { meta: founder.meta, page: <Founder content={founder} /> },
-  '/contact': { meta: contact.meta, page: <Contact content={contact} /> },
-  '/investors': { meta: investors.meta, page: <Investors content={investors} /> },
-  '/family-care': { meta: family.meta, page: <Family content={family} /> },
-  '/genetics': { meta: genetics.meta, page: <Genetics content={genetics} /> },
-  '/privacy': { meta: legal.privacy.meta, page: <Legal content={legal.privacy} /> },
-  '/terms': { meta: legal.terms.meta, page: <Legal content={legal.terms} /> },
-  '/sign-in': { meta: auth.signIn.meta, page: <SignIn content={auth} /> },
-  '/sign-up': { meta: auth.signUp.meta, page: <SignUp content={auth} /> },
-  '/forgot-password': { meta: auth.forgot.meta, page: <ForgotPassword content={auth} /> },
-  '/reset-password': { meta: auth.reset.meta, page: <ResetPassword content={auth} /> },
-  '/verify-email': { meta: auth.verify.meta, page: <VerifyEmail content={auth} /> },
+  ...pageRoutes('en', '', '/ar'),
+  ...pageRoutes('ar', '/ar', ''),
 };
 
 const path = location.pathname.replace(/\/+$/, '') || '/';

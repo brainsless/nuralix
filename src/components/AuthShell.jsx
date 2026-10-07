@@ -9,7 +9,10 @@ export default function AuthShell({ content, title, lede, children }) {
   return (
     <main className="auth">
       <div className="auth-form">
-        <Wordmark href={content.home.href} label={content.home.label} />
+        <div className="auth-top">
+          <Wordmark href={content.home.href} label={content.home.label} />
+          <a className="lang" href={content.switch.href} lang={content.switch.lang}>{content.switch.label}</a>
+        </div>
         <div className="auth-body">
           <h1>{title}</h1>
           {lede && <p className="auth-lede">{lede}</p>}

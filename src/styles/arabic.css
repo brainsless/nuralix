@@ -35,7 +35,7 @@ html[lang="ar"] body { line-height: 1.8; }
 html[lang="ar"] * { letter-spacing: 0; }
 html[lang="ar"] .wordmark { letter-spacing: -0.03em; }
 
-html[lang="ar"] :is(h1, h2, .rows h3, .counts dt, .footer-pitch) {
+html[lang="ar"] :is(h1, h2, .rows h3, .counts dt, .footer-pitch, .founder-top blockquote, .auth-art p) {
   font-family: "Thmanyah Serif Display", "Thmanyah Sans", serif;
   font-weight: 400;
   line-height: 1.35;
@@ -43,7 +43,10 @@ html[lang="ar"] :is(h1, h2, .rows h3, .counts dt, .footer-pitch) {
 html[lang="ar"] .price-panel h2 { line-height: 1.1; text-align: right; }
 
 /* The small Latin label size is too small for Arabic letterforms. */
-html[lang="ar"] :is(.fine, .alert-from span, .footer-links h2) { font-size: 0.875rem; }
+html[lang="ar"] :is(.fine, .alert-from span, .footer-links h2, .tag) { font-size: 0.875rem; }
+/* English legal text inside an Arabic page keeps the Latin faces and spacing. */
+html[lang="ar"] [lang="en"] :is(h2, p) { font-family: "Host Grotesk", system-ui, sans-serif; font-weight: inherit; line-height: inherit; }
+html[lang="ar"] [lang="en"] h2 { font-weight: 300; line-height: 1.02; letter-spacing: -0.035em; }
 html[lang="ar"] .fine { line-height: 1.6; }
 /* Column titles are headings, but they are labels: they stay in the text face. */
 html[lang="ar"] .footer-links h2 { font-family: var(--sans); font-weight: 500; line-height: 1.2; }

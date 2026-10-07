@@ -18,6 +18,12 @@
   max-width: 26rem;
   margin: auto 0;
 }
+.auth-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.auth-top .lang { font-size: 0.9375rem; text-decoration: none; }
 .auth h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); }
 .auth-lede {
   margin-top: 16px;
@@ -27,7 +33,7 @@
 .auth-lede + .button { margin-top: 32px; }
 .auth-status { margin-top: 32px; color: var(--slate); }
 .auth-switch { margin-top: 28px; color: var(--slate); }
-.auth a:not(.button, .wordmark) {
+.auth a:not(.button, .wordmark, .lang) {
   color: var(--ink);
   text-decoration-color: var(--reagent);
   text-underline-offset: 4px;

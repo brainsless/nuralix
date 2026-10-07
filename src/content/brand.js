@@ -1,5 +1,7 @@
 import en from './en.js';
-import { LINKS } from './links.js';
+import { linksFor } from './links.js';
+
+const LINKS = linksFor('');
 
 export default {
   meta: {

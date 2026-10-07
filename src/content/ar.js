@@ -1,4 +1,6 @@
-import { LINKS, SOURCES } from './links.js';
+import { linksFor, SOURCES } from './links.js';
+
+const LINKS = linksFor('/ar');
 
 const PITCH = 'ذكاء اصطناعي يعرف حمضك النووي، يراقب جسدك، وينبّهك مبكرًا.';
 

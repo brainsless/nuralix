@@ -5,6 +5,7 @@ import { useSubmit } from '../../hooks/useSubmit.js';
 import { passwordProblem, resetPassword, returnToFromLocation, withReturnTo } from '../../lib/auth.js';
 
 export default function ResetPassword({ content }) {
+  const { base, messages, reset: t } = content;
   const [returnTo] = useState(returnToFromLocation);
   const [token] = useState(() => new URLSearchParams(location.search).get('token'));
   const [done, setDone] = useState(false);
@@ -14,40 +15,41 @@ export default function ResetPassword({ content }) {
     if (problem) throw new Error(problem);
     await resetPassword(password, token);
     setDone(true);
-  }, 'This reset link is invalid or expired. Request a new one.');
+  }, t.failed, messages);
 
   if (done) {
     return (
-      <AuthShell content={content} title="Password updated">
-        <a className="button" href={withReturnTo('/sign-in', returnTo)}>Sign in</a>
+      <AuthShell content={content} title={t.doneTitle}>
+        <a className="button" href={withReturnTo(`${base}/sign-in`, returnTo)}>{t.signIn}</a>
       </AuthShell>
     );
   }
 
   if (!token) {
     return (
-      <AuthShell content={content} title="This reset link is invalid or expired." lede="Request a new one to choose a password.">
-        <a className="button" href={withReturnTo('/forgot-password', returnTo)}>Request a new link</a>
+      <AuthShell content={content} title={t.badLinkTitle} lede={t.badLink}>
+        <a className="button" href={withReturnTo(`${base}/forgot-password`, returnTo)}>{t.requestNew}</a>
       </AuthShell>
     );
   }
 
   return (
-    <AuthShell content={content} title={content.reset.title} lede={content.reset.lede}>
+    <AuthShell content={content} title={t.title} lede={t.lede}>
       <form onSubmit={onSubmit}>
         <Field
-          label="New password"
+          label={content.newPassword}
           name="password"
           type="password"
           autoComplete="new-password"
           minLength={8}
           maxLength={128}
-          hint="Use 8–128 characters with at least one letter and one number."
+          hint={content.passwordHint}
+          dir="ltr"
           required
         />
-        <Field label="Confirm password" name="confirmation" type="password" autoComplete="new-password" required />
+        <Field label={content.confirmPassword} name="confirmation" type="password" autoComplete="new-password" dir="ltr" required />
         {error && <p className="form-error" role="alert">{error}</p>}
-        <button className="button" type="submit" disabled={busy}>{busy ? 'Updating…' : 'Update password'}</button>
+        <button className="button" type="submit" disabled={busy}>{busy ? t.busy : t.submit}</button>
       </form>
     </AuthShell>
   );

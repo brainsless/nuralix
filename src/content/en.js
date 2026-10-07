@@ -1,4 +1,6 @@
-import { LINKS, SOURCES } from './links.js';
+import { linksFor, SOURCES } from './links.js';
+
+const LINKS = linksFor('');
 
 const PITCH = 'An AI that knows your DNA, watches your body, and warns you early.';
 

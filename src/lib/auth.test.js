@@ -13,6 +13,8 @@ test('safeReturnTo only allows this site and trusted Nuralix origins', () => {
   assert.equal(safeReturnTo('javascript:alert(1)'), HEALTH_HUB);
   assert.equal(safeReturnTo('https://app.nuralix.ai.evil.example/'), HEALTH_HUB);
   assert.equal(safeReturnTo('/sign-in'), HEALTH_HUB);
+  assert.equal(safeReturnTo('/ar/sign-up?x=1'), HEALTH_HUB);
+  assert.equal(safeReturnTo('/ar/genetics'), '/ar/genetics');
   assert.equal(safeReturnTo('x'.repeat(2049)), HEALTH_HUB);
   assert.equal(safeReturnTo('/genetics?a=1#b'), '/genetics?a=1#b');
   assert.equal(safeReturnTo('https://app.nuralix.ai/genetics?startCheckout=1'), 'https://app.nuralix.ai/genetics?startCheckout=1');

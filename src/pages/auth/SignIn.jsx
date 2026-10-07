@@ -5,6 +5,7 @@ import { useSubmit } from '../../hooks/useSubmit.js';
 import { hasSession, returnToFromLocation, signIn, withReturnTo } from '../../lib/auth.js';
 
 export default function SignIn({ content }) {
+  const { base, messages, signIn: t } = content;
   const [returnTo] = useState(returnToFromLocation);
   const [checking, setChecking] = useState(true);
 
@@ -22,29 +23,30 @@ export default function SignIn({ content }) {
   const { busy, error, onSubmit } = useSubmit(async ({ email, password }) => {
     await signIn(email.trim(), password);
     location.assign(returnTo);
-  }, "We couldn't sign you in. Check your email and password and try again.");
+  }, t.failed, messages);
 
   return (
-    <AuthShell content={content} title={content.signIn.title} lede={content.signIn.lede}>
+    <AuthShell content={content} title={t.title} lede={t.lede}>
       {checking ? (
-        <p className="auth-status">Checking your Nuralix account…</p>
+        <p className="auth-status">{t.checking}</p>
       ) : (
         <form onSubmit={onSubmit}>
-          <Field label="Email" name="email" type="email" autoComplete="email" placeholder="you@example.com" required />
+          <Field label={content.email} name="email" type="email" autoComplete="email" placeholder={content.emailExample} dir="ltr" required />
           <Field
-            label="Password"
+            label={content.password}
             name="password"
             type="password"
             autoComplete="current-password"
+            dir="ltr"
             required
-            aside={<a href={withReturnTo('/forgot-password', returnTo)}>Forgot password?</a>}
+            aside={<a href={withReturnTo(`${base}/forgot-password`, returnTo)}>{t.forgot}</a>}
           />
           {error && <p className="form-error" role="alert">{error}</p>}
-          <button className="button" type="submit" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button>
+          <button className="button" type="submit" disabled={busy}>{busy ? t.busy : t.submit}</button>
         </form>
       )}
       <p className="auth-switch">
-        New to Nuralix? <a href={withReturnTo('/sign-up', returnTo)}>Create a free account</a>
+        {t.newHere} <a href={withReturnTo(`${base}/sign-up`, returnTo)}>{t.create}</a>
       </p>
     </AuthShell>
   );

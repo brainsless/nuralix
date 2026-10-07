@@ -9,6 +9,9 @@ const LEGACY_GENETICS_ORIGIN = 'https://genetics.nuralix.ai';
 const TRUSTED_ORIGINS = new Set([APP_ORIGIN, 'https://hospital.nuralix.ai']);
 const AUTH_PATHS = new Set(['/sign-in', '/sign-up', '/forgot-password', '/reset-password', '/verify-email']);
 
+// The account pages exist under each language's prefix, such as /ar/sign-in.
+const isAuthPath = (pathname) => AUTH_PATHS.has(pathname.replace(/^\/[a-z]{2}(?=\/)/, ''));
+
 // Where to send someone after they sign in. Anything that is not a page on this site or on a
 // trusted Nuralix origin falls back to the Health Hub, so a crafted link cannot redirect elsewhere.
 export function safeReturnTo(value) {
@@ -16,10 +19,10 @@ export function safeReturnTo(value) {
   try {
     if (value.startsWith('/') && !value.startsWith('//')) {
       const local = new URL(value, location.origin);
-      return AUTH_PATHS.has(local.pathname) ? HEALTH_HUB : `${local.pathname}${local.search}${local.hash}`;
+      return isAuthPath(local.pathname) ? HEALTH_HUB : `${local.pathname}${local.search}${local.hash}`;
     }
     const url = new URL(value);
-    if (AUTH_PATHS.has(url.pathname)) return HEALTH_HUB;
+    if (isAuthPath(url.pathname)) return HEALTH_HUB;
     if (url.origin === LEGACY_GENETICS_ORIGIN) return new URL(`${url.pathname}${url.search}${url.hash}`, APP_ORIGIN).toString();
     return TRUSTED_ORIGINS.has(url.origin) ? url.toString() : HEALTH_HUB;
   } catch {
@@ -34,8 +37,8 @@ export function withReturnTo(path, returnTo) {
   return returnTo === HEALTH_HUB ? path : `${path}?returnTo=${encodeURIComponent(returnTo)}`;
 }
 
-// The page an emailed link should come back to, carrying the destination with it.
-function callbackUrl(path, returnTo) {
+// The full address an emailed link should come back to, carrying the destination with it.
+export function emailLink(path, returnTo) {
   return new URL(withReturnTo(path, returnTo), location.origin).toString();
 }
 
@@ -82,18 +85,17 @@ export async function hasSession() {
 
 export const signIn = (email, password) => request('/sign-in/email', { email, password });
 
-export const signUp = (profile, email, password, returnTo) =>
+export const signUp = (profile, email, password, callbackURL) =>
   request('/sign-up/email', {
     email,
     password,
     ...profile,
-    callbackURL: callbackUrl('/verify-email', returnTo),
+    callbackURL,
     acceptedTerms: true,
     acceptedPolicyVersions: { termsOfService: '1.0', privacyPolicy: '2.0' },
   });
 
-export const requestPasswordReset = (email, returnTo) =>
-  request('/request-password-reset', { email, redirectTo: callbackUrl('/reset-password', returnTo) });
+export const requestPasswordReset = (email, redirectTo) => request('/request-password-reset', { email, redirectTo });
 
 export const resetPassword = (newPassword, token) => request('/reset-password', { newPassword, token });
 
