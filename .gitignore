@@ -1,0 +1,4 @@
+node_modules
+dist
+# Thmanyah's licence forbids redistributing the font files.
+public/fonts

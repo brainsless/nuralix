@@ -1,0 +1,49 @@
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyahsans-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyahsans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyahsans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Serif Display";
+  src: url("/fonts/thmanyahserifdisplay-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+.lang[lang="ar"] { font-family: "Thmanyah Sans", sans-serif; font-size: 1rem; }
+
+html[lang="ar"] {
+  --sans: "Thmanyah Sans", system-ui, sans-serif;
+  --mono: "Thmanyah Sans", system-ui, sans-serif;
+}
+html[lang="ar"] body { line-height: 1.8; }
+
+/* Arabic is a joined script: tracking breaks the joins, so it is reset everywhere. */
+html[lang="ar"] * { letter-spacing: 0; }
+html[lang="ar"] .wordmark { letter-spacing: -0.03em; }
+
+html[lang="ar"] :is(h1, h2, .rows h3, .counts dt, .footer-pitch) {
+  font-family: "Thmanyah Serif Display", "Thmanyah Sans", serif;
+  font-weight: 400;
+  line-height: 1.35;
+}
+html[lang="ar"] .price-panel h2 { line-height: 1.1; text-align: right; }
+
+/* The small Latin label size is too small for Arabic letterforms. */
+html[lang="ar"] :is(.fine, .alert-from span, .footer-links h2) { font-size: 0.875rem; }
+html[lang="ar"] .fine { line-height: 1.6; }
+/* Column titles are headings, but they are labels: they stay in the text face. */
+html[lang="ar"] .footer-links h2 { font-family: var(--sans); font-weight: 500; line-height: 1.2; }

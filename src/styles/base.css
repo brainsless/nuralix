@@ -1,0 +1,77 @@
+:root {
+  --paper: #f4f7f6;
+  --panel: #e4eeec;
+  --ink: #0c1b1e;
+  --slate: #5a6b6f;
+  --line: #d6dfde;
+  --reagent: #0e6f6a;
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --section: clamp(96px, 18svh, 200px);
+  --radius: 24px;
+  --sans: "Host Grotesk", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+
+  /* The gap between the screen edge and the opening and closing cards. */
+  --card-top: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+section[id] { scroll-margin-top: 72px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.0625rem/1.55 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--reagent); outline-offset: 3px; }
+
+h1, h2 {
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.fine {
+  max-width: 62ch;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--slate);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+.button:hover { background: var(--reagent); }
+
+.button.quiet {
+  background: none;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+.button.quiet:hover { background: var(--ink); color: var(--paper); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}

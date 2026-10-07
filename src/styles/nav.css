@@ -1,0 +1,130 @@
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  height: 64px;
+  /* At the top of the page the header sits inside the opening video card. */
+  padding: 0 calc(var(--gutter) + clamp(12px, 2vw, 28px));
+  transform: translateY(var(--card-top));
+  font-size: 0.9375rem;
+  transition: padding 0.25s, transform 0.25s;
+}
+/* Settled: once the page is scrolled the bar itself disappears. What is left is the logo, the order
+   button and the menu, each on its own piece of frosted glass so it reads over footage, paper or ink.
+   Pages without the opening video start here. */
+.settled .nav {
+  padding: 0 var(--gutter);
+  transform: none;
+  pointer-events: none;
+}
+.settled .nav > * { pointer-events: auto; }
+.settled :is(.nav-links, .nav-actions) { display: none; }
+.settled .menu-toggle { display: inline-flex; }
+
+.settled .nav :is(.wordmark, .menu-toggle) {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: rgb(244 247 246 / 0.62);
+  backdrop-filter: blur(14px) saturate(1.4);
+}
+/* A faint light edge keeps the ink button visible when it passes over the ink footer. */
+.settled .nav .button {
+  min-height: 40px;
+  box-shadow: 0 0 0 1px rgb(244 247 246 / 0.22);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Host Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.nav-links, .nav-actions, .nav-end { display: flex; align-items: center; }
+.nav-links { gap: 32px; }
+.nav-actions { gap: 24px; }
+.nav-end { gap: 12px; margin-inline-start: auto; }
+
+.nav-links a,
+.nav-actions a:not(.button) {
+  text-decoration: none;
+  opacity: 0.72;
+  transition: opacity 0.2s;
+}
+.nav-links a:hover,
+.nav-actions a:not(.button):hover { opacity: 1; }
+
+/* Menu: holds the links and actions that do not fit in the bar. */
+
+.menu-toggle {
+  display: none;
+  align-items: center;
+  height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.menu {
+  inset: calc(72px + var(--card-top)) var(--gutter) auto;
+  width: auto;
+  max-height: calc(100svh - 96px);
+  margin: 0;
+  padding: 8px 24px 24px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1.0625rem;
+}
+.menu::backdrop { background: rgb(12 27 30 / 0.28); }
+.menu a:not(.button) {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+}
+.menu .button {
+  justify-content: center;
+  width: 100%;
+  margin-top: 24px;
+}
+
+@media (max-width: 1179px) {
+  .nav { gap: 12px; }
+  .nav-links, .nav-actions { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+
+@media (max-width: 480px) {
+  .nav .button { min-height: 40px; padding: 0 16px; }
+  /* The opening card carries its own order button, so on a phone the bar's copy waits until the header settles. */
+  html:not(.settled) .nav-end > .button { display: none; }
+  /* Settled on a phone, the logo is the rings alone, which leaves room for the longer translations. */
+  .settled .nav .wordmark { gap: 0; padding: 0 10px; font-size: 0; }
+}
+
+/* On the narrowest phones the longer translations only fit beside the rings alone. */
+@media (max-width: 359px) {
+  .nav .wordmark { gap: 0; font-size: 0; }
+  .nav .button { padding: 0 12px; }
+  .settled .nav .menu-toggle { padding: 0 10px; }
+}
+
+/* Without the Popover API the menu cannot open, so its toggle is not offered. */
+@supports not selector(:popover-open) {
+  .menu, .nav .menu-toggle, .settled .menu-toggle { display: none; }
+}
